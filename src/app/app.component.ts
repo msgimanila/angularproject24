@@ -8,7 +8,7 @@ import { NewsFeedComponent } from 'news-feed.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NewsFeedComponent // Declare NewsFeedComponent here
+    NewsFeedComponent 
   ],
   imports: [
     BrowserModule,
