@@ -1,44 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import { Component, OnInit } from '@angular/core';
 import Parser from 'rss-parser';
 
-const NewsFeed = () => {
-  const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(true);
+@Component({
+  selector: 'app-news-feed',
+  templateUrl: './news-feed.component.html',
+  styleUrls: ['./news-feed.component.css']
+})
+export class NewsFeedComponent implements OnInit {
+  news: any[] = [];
+  loading = true;
 
-  useEffect(() => {
-    const fetchRSS = async () => {
-      const parser = new Parser();
-      try {
-        const feed = await parser.parseURL('https://news.google.com/rss'); // Change URL as needed
-        setNews(feed.items);
-      } catch (error) {
-        console.error('Error fetching RSS feed:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  constructor() {}
 
-    fetchRSS();
-  }, []);
+  async ngOnInit(): void {
+    const parser = new Parser();
+    const feedUrl = 'https://news.google.com/rss'; // Replace with any public RSS feed URL
 
-  if (loading) return <div>Loading news...</div>;
-
-  return (
-    <div>
-      <h1>Latest News</h1>
-      <ul>
-        {news.map((article, index) => (
-          <li key={index}>
-            <h2>{article.title}</h2>
-            <p>{article.contentSnippet || article.summary}</p>
-            <a href={article.link} target="_blank" rel="noopener noreferrer">
-              Read more
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default NewsFeed;
+    try {
+      const feed = await parser.parseURL(feedUrl);
+      this.news = feed.items || [];
+    } catch (error) {
+      console.error('Error fetching RSS feed:', error);
+    } finally {
+      this.loading = false;
+    }
+  }
+}
