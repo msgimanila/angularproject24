@@ -3,8 +3,8 @@ import Parser from 'rss-parser';
 
 @Component({
   selector: 'app-news-feed',
-  templateUrl: './news-feed.component.html',
-  styleUrls: ['./news-feed.component.css']
+  templateUrl: 'news-feed.component.html',
+  styleUrls: ['news-feed.component.css']
 })
 export class NewsFeedComponent implements OnInit {
   news: any[] = [];
